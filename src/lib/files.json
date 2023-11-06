@@ -1,0 +1,31 @@
+{
+  "sha": "7d89444033738ddaadd6cb2f06a8bfe0f4aabe76",
+  "url": "https://api.github.com/repos/gitdagray/test-blogposts/git/trees/7d89444033738ddaadd6cb2f06a8bfe0f4aabe76",
+  "tree": [
+    {
+      "path": "another.mdx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "86a4dd3f2aa812bd140fc02243002d6357b4e540",
+      "size": 1290,
+      "url": "https://api.github.com/repos/gitdagray/test-blogposts/git/blobs/86a4dd3f2aa812bd140fc02243002d6357b4e540"
+    },
+    {
+      "path": "new.mdx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e1e35b5c0de031d6b02e9434b4c38515c25c888e",
+      "size": 1153,
+      "url": "https://api.github.com/repos/gitdagray/test-blogposts/git/blobs/e1e35b5c0de031d6b02e9434b4c38515c25c888e"
+    },
+    {
+      "path": "weekend.mdx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d23414deb7ee73edbf28e27d5bcf227ba02df927",
+      "size": 1192,
+      "url": "https://api.github.com/repos/gitdagray/test-blogposts/git/blobs/d23414deb7ee73edbf28e27d5bcf227ba02df927"
+    }
+  ],
+  "truncated": false
+}
