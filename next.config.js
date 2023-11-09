@@ -8,6 +8,10 @@ const nextConfig = {
         port: '',
         pathname: '/fengyun2/nextjs-blog/main/images/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'source.unsplash.com',
+      }
     ],
   },
 }
