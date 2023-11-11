@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3004",
+    "dev:turbo": "next dev --turbo -p 3004",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -16,6 +17,7 @@
     "react-icons": "^4.11.0"
   },
   "devDependencies": {
+    "@mdxeditor/editor": "^1.8.1",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/typography": "^0.5.10",
     "@types/node": "^20",
