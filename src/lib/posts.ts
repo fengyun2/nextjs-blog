@@ -6,6 +6,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeSlug from 'rehype-slug';
 import CustomImage from '@/app/components/CustomImage';
+import Video from '@/app/components/Video';
 // import repoFiletreeOrigin from './files.json'
 
 type Tree = {
@@ -38,6 +39,7 @@ export async function getPostByName(fileName: string) {
       source: fileContents,
       components: {
         CustomImage,
+        Video,
       },
       options: {
         parseFrontmatter: true,
