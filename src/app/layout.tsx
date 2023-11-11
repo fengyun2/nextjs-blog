@@ -1,26 +1,19 @@
-import type { Metadata } from 'next'
-import './globals.css'
-import Navbar from './components/Navbar'
-
+import type { Metadata } from 'next';
+import './globals.css';
+import Navbar from './components/Navbar';
 
 export const metadata: Metadata = {
-  title: 'Spring\'s Blog',
+  title: "Spring's Blog",
   description: 'Created by Spring',
-}
+};
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="dark:bg-slate-800">
+    <html lang='en'>
+      <body className='dark:bg-slate-800'>
         <Navbar />
-        <main className='px-4 md:px-6 prose prose-xl prose-slate dark:prose-invert mx-auto'>
-        {children}
-        </main>
+        <main className='prose prose-xl prose-slate mx-auto px-4 dark:prose-invert md:px-6'>{children}</main>
       </body>
     </html>
-  )
+  );
 }

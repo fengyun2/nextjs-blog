@@ -1,43 +1,43 @@
-import fs from 'fs'
-import path from 'path'
-import { sync } from 'glob'
-import { compileMDX } from 'next-mdx-remote/rsc'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import rehypeHighlight from 'rehype-highlight'
-import rehypeSlug from 'rehype-slug'
-import CustomImage from '@/app/components/CustomImage'
+import fs from 'fs';
+import path from 'path';
+import { sync } from 'glob';
+import { compileMDX } from 'next-mdx-remote/rsc';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeHighlight from 'rehype-highlight';
+import rehypeSlug from 'rehype-slug';
+import CustomImage from '@/app/components/CustomImage';
 // import repoFiletreeOrigin from './files.json'
 
 type Tree = {
-  path: string
-  mode: string
-  type: string
-  sha: string
-  size?: number
-  url: string
-}
+  path: string;
+  mode: string;
+  type: string;
+  sha: string;
+  size?: number;
+  url: string;
+};
 type Filetree = {
   sha: string;
   url: string;
   truncated: boolean;
-  "tree": Tree[]
-}
+  tree: Tree[];
+};
 
-const postsDirectory = path.join(process.cwd(), 'src/blogposts')
+const postsDirectory = path.join(process.cwd(), 'src/blogposts');
 
 /**
  * 根据文件名获取文件内容
  * @param {string} fileName 文件名，带后缀
-* @returns {object|undefined}
+ * @returns {object|undefined}
  */
 export async function getPostByName(fileName: string) {
   try {
-    const fullPath = path.join(postsDirectory, fileName)
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
-    const { frontmatter, content } = await compileMDX<{ title: string, date: string, tags: string[] }>({
+    const fullPath = path.join(postsDirectory, fileName);
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const { frontmatter, content } = await compileMDX<{ title: string; date: string; tags: string[] }>({
       source: fileContents,
       components: {
-        CustomImage
+        CustomImage,
       },
       options: {
         parseFrontmatter: true,
@@ -45,21 +45,27 @@ export async function getPostByName(fileName: string) {
           rehypePlugins: [
             rehypeSlug,
             rehypeAutolinkHeadings,
-            //@ts-ignore
-            [rehypeHighlight, {
-              behavior: 'wrap',
-              // theme: 'github',
-            }],
+            [
+              //@ts-ignore
+              rehypeHighlight,
+              {
+                behavior: 'wrap',
+                // theme: 'github',
+              },
+            ],
           ],
-        }
-      }
-    })
-    const id = fileName.replace(/\.mdx$/, '')
-    const blogPostObj: BlogPost = { meta: { id, title: frontmatter.title, date: frontmatter.date, tags: frontmatter.tags }, content }
-    return blogPostObj
+        },
+      },
+    });
+    const id = fileName.replace(/\.mdx$/, '');
+    const blogPostObj: BlogPost = {
+      meta: { id, title: frontmatter.title, date: frontmatter.date, tags: frontmatter.tags },
+      content,
+    };
+    return blogPostObj;
   } catch (error) {
-    console.error(`getPostByName [${fileName}]: `, error)
-    return undefined
+    console.error(`getPostByName [${fileName}]: `, error);
+    return undefined;
   }
 }
 
@@ -68,13 +74,13 @@ export async function getPostByName(fileName: string) {
  * @returns {Array} 文件名数组
  */
 export async function getAllPostsFileName() {
-  const paths = sync(`${postsDirectory}/**/*.mdx`)
-  return paths?.map(path => {
-    const pathContent = path.split('/')
-    const fileName = pathContent[pathContent.length - 1]
+  const paths = sync(`${postsDirectory}/**/*.mdx`);
+  return paths?.map((path) => {
+    const pathContent = path.split('/');
+    const fileName = pathContent[pathContent.length - 1];
     // const [slug, _extension] = fileName?.split('.') || []
-    return fileName
-  })
+    return fileName;
+  });
 }
 /**
  * 获取所有博客文章的元数据
@@ -85,16 +91,16 @@ export async function getPostsMeta() {
   // const repoFiletree: Filetree = repoFiletreeOrigin
   // const repoFiletree: Filetree = repoFiletreeOrigin
   // const filesArray = repoFiletree.tree.map(obj => obj.path).filter(path => path.endsWith('.mdx'))
-  const filesArray = await getAllPostsFileName() || []
+  const filesArray = (await getAllPostsFileName()) || [];
   // console.warn(filesArray, ' getPostsMeta filesArray ====>')
-  const posts: Meta[] = []
+  const posts: Meta[] = [];
   for (const file of filesArray) {
-    const post = await getPostByName(file)
+    const post = await getPostByName(file);
     if (post) {
-      const { meta } = post
-      posts.push(meta)
+      const { meta } = post;
+      posts.push(meta);
     }
   }
   // console.log(posts, ' getPostsMeta result======>')
-  return posts.sort((a, b) => a.date < b.date ? 1 : -1)
+  return posts.sort((a, b) => (a.date < b.date ? 1 : -1));
 }
