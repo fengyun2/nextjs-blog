@@ -5,6 +5,9 @@ import { compileMDX } from 'next-mdx-remote/rsc';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeSlug from 'rehype-slug';
+// @ts-ignore
+import { rehypeExtendedTable } from 'rehype-extended-table';
+// import remarkGfm from 'remark-gfm';
 import CustomImage from '@/app/components/CustomImage';
 import Video from '@/app/components/Video';
 // import repoFiletreeOrigin from './files.json'
@@ -45,9 +48,11 @@ export async function getPostByName(fileName: string) {
       options: {
         parseFrontmatter: true,
         mdxOptions: {
+          // remarkPlugins: [remarkGfm],
           rehypePlugins: [
             rehypeSlug,
             rehypeAutolinkHeadings,
+            rehypeExtendedTable,
             [
               //@ts-ignore
               rehypeHighlight,
