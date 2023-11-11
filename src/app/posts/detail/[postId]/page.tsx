@@ -54,7 +54,7 @@ export default async function Post({ params: { postId } }: Props) {
         <div className='flex flex-row gap-4'>{tags}</div>
       </section>
       <p className='mb-10'>
-        <Link href='/'>← Back to home</Link>
+        <Link href='/'>← Back to home</Link> |<Link href={`/posts/edit/${postId}`}>Edit</Link>
       </p>
     </>
   );

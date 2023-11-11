@@ -12,10 +12,10 @@ import {
   // type MDXEditorMethods,
   // type MDXEditorProps,
 
-  Separator,
+  // Separator,
   // CodeToggle,
   // InsertCodeBlock,
-  InsertSandpack,
+  // InsertSandpack,
   // ConditionalContents,
   // ShowSandpackInfo,
   // InsertFrontmatter,
@@ -57,6 +57,7 @@ import { tablePlugin } from '@mdxeditor/editor/plugins/table';
 // import { InsertTable } from '@mdxeditor/editor/plugins/toolbar/components/InsertTable';
 import { toolbarPlugin } from '@mdxeditor/editor/plugins/toolbar';
 
+// @ts-ignore
 import dataCode from 'raw-loader!../assets/dataCode.ts';
 
 type EditorProps = {
@@ -174,13 +175,23 @@ export default function MDXEditorComponent({ editorRef, ...props }: EditorProps)
         frontmatterPlugin(),
         diffSourcePlugin({ viewMode: 'rich-text', diffMarkdown: 'boo' }),
         codeBlockPlugin({ defaultCodeBlockLanguage: 'js' }),
-        codeMirrorPlugin({ codeBlockLanguages: { js: 'JavaScript', css: 'CSS', txt: 'text', tsx: 'TypeScript' } }),
+        codeMirrorPlugin({
+          codeBlockLanguages: {
+            js: 'JavaScript',
+            css: 'CSS',
+            less: 'Less',
+            scss: 'SCSS',
+            txt: 'text',
+            ts: 'TypeScript',
+            tsx: 'TypeScript',
+          },
+        }),
         sandpackPlugin({ sandpackConfig: virtuosoSampleSandpackConfig }),
         toolbarPlugin({
           toolbarContents: () => (
             <>
-              <InsertSandpack />
-              <Separator />
+              {/* <InsertSandpack />
+              <Separator /> */}
 
               <KitchenSinkToolbar />
             </>

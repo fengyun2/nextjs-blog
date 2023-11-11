@@ -1,11 +1,12 @@
 type Meta = {
-  id: string,
-  title: string,
-  date: string,
-  tags: string[],
-}
+  id: string;
+  title: string;
+  date: string;
+  tags: string[];
+};
 
 type BlogPost = {
-  meta: Meta,
-  content: ReactElement<any, string | JSXElementConstructor<any>>,
-}
+  meta: Meta;
+  content: ReactElement<any, string | JSXElementConstructor<any>>;
+  fileContents: any; // 原文件内容
+};

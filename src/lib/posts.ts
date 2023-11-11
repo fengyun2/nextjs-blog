@@ -9,20 +9,21 @@ import CustomImage from '@/app/components/CustomImage';
 import Video from '@/app/components/Video';
 // import repoFiletreeOrigin from './files.json'
 
-type Tree = {
-  path: string;
-  mode: string;
-  type: string;
-  sha: string;
-  size?: number;
-  url: string;
-};
-type Filetree = {
-  sha: string;
-  url: string;
-  truncated: boolean;
-  tree: Tree[];
-};
+// type Tree = {
+//   path: string;
+//   mode: string;
+//   type: string;
+//   sha: string;
+//   size?: number;
+//   url: string;
+// };
+
+// type Filetree = {
+//   sha: string;
+//   url: string;
+//   truncated: boolean;
+//   tree: Tree[];
+// };
 
 const postsDirectory = path.join(process.cwd(), 'src/blogposts');
 
@@ -63,6 +64,7 @@ export async function getPostByName(fileName: string) {
     const blogPostObj: BlogPost = {
       meta: { id, title: frontmatter.title, date: frontmatter.date, tags: frontmatter.tags },
       content,
+      fileContents,
     };
     return blogPostObj;
   } catch (error) {
