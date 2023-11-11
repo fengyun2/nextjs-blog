@@ -28,6 +28,9 @@ import {
   // CreateLink,
   // ListsToggle,
   // ChangeAdmonitionType,
+  NestedLexicalEditor,
+  GenericJsxEditor,
+  jsxPlugin,
   frontmatterPlugin,
   diffSourcePlugin,
   codeBlockPlugin,
@@ -37,6 +40,7 @@ import {
   type SandpackConfig,
   type EditorInFocus,
   type AdmonitionKind,
+  type JsxComponentDescriptor,
 } from '@mdxeditor/editor';
 
 import { MDXEditor, type MDXEditorMethods, type MDXEditorProps } from '@mdxeditor/editor/MDXEditor';
@@ -56,6 +60,7 @@ import { tablePlugin } from '@mdxeditor/editor/plugins/table';
 // import { InsertImage } from '@mdxeditor/editor/plugins/toolbar/components/InsertImage';
 // import { InsertTable } from '@mdxeditor/editor/plugins/toolbar/components/InsertTable';
 import { toolbarPlugin } from '@mdxeditor/editor/plugins/toolbar';
+import type { MdxJsxTextElement } from 'mdast-util-mdx';
 
 // @ts-ignore
 import dataCode from 'raw-loader!../assets/dataCode.ts';
@@ -151,6 +156,65 @@ async function imageUploadHandler(image: File) {
   }
 }
 
+const jsxComponentDescriptors: JsxComponentDescriptor[] = [
+  {
+    name: 'MyLeaf',
+    kind: 'text',
+    source: './external',
+    props: [
+      { name: 'foo', type: 'string' },
+      { name: 'bar', type: 'string' },
+    ],
+    hasChildren: true,
+    Editor: GenericJsxEditor,
+  },
+  {
+    name: 'Marker',
+    kind: 'text',
+    source: './external',
+    props: [{ name: 'type', type: 'string' }],
+    hasChildren: false,
+    // Editor: GenericJsxEditor,
+    Editor: () => {
+      return (
+        <div style={{ border: '1px solid red', padding: 8, margin: 8, display: 'inline-block' }}>
+          {/* @ts-ignore */}
+          <NestedLexicalEditor<MdxJsxTextElement>
+            getContent={(node) => node.children}
+            getUpdatedMdastNode={(mdastNode, children: any) => {
+              return { ...mdastNode, children };
+            }}
+          />
+        </div>
+      );
+    },
+  },
+  {
+    name: 'BlockNode',
+    kind: 'flow',
+    source: './external',
+    props: [],
+    hasChildren: true,
+    Editor: GenericJsxEditor,
+  },
+  {
+    name: 'CustomImage',
+    kind: 'flow',
+    source: '@/app/components/CustomImage',
+    props: [],
+    hasChildren: true,
+    Editor: GenericJsxEditor,
+  },
+  {
+    name: 'Video',
+    kind: 'flow',
+    source: '@/app/components/Video',
+    props: [],
+    hasChildren: true,
+    Editor: GenericJsxEditor,
+  },
+];
+
 export default function MDXEditorComponent({ editorRef, ...props }: EditorProps) {
   return (
     <MDXEditor
@@ -173,6 +237,7 @@ export default function MDXEditorComponent({ editorRef, ...props }: EditorProps)
         }),
         tablePlugin(),
         frontmatterPlugin(),
+        jsxPlugin({ jsxComponentDescriptors }),
         diffSourcePlugin({ viewMode: 'rich-text', diffMarkdown: 'boo' }),
         codeBlockPlugin({ defaultCodeBlockLanguage: 'js' }),
         codeMirrorPlugin({
